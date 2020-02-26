@@ -1,19 +1,24 @@
 const express = require("express");
-const path = require("path");
-const PORT = process.env.PORT || 3001;
+const http = require("http");
+const socketIo = require("socket.io");
+
+const PORT = process.env.PORT || 4001;
+const index = require("./routes/index");
+
 const app = express();
+app.use(index);
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const server = http.createServer(app);
 
-if(process.env.NODE_ENV === "production") {
-   app.use(express.static("client/build"));
-}
+const io = socketIo(server);
 
-app.get("*", (req, res) => {
-   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+io.on("connection", socket => {
+  console.log("New client connected");
+  socket.on("chat message", function(msg) {
+    console.log("message: " + msg);
+    io.emit("chat message", msg);
+  });
+  socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
-app.listen(PORT, () => {
-   console.log(`🌎 ==> API server now on port ${PORT}!`);
-});
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
