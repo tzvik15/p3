@@ -12,9 +12,9 @@ const Choice = (props) => {
             {/* <CardTitle>Card title</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle> */}
             <CardText>How many spaces would you like to move?</CardText>
-            <Button className="moveBtn">Move one space</Button>
-            <Button className="moveBtn">Move two spaces</Button>
-            <Button className="moveBtn">Move three spaces</Button>
+            <Button className="moveBtn" onClick={props.moveOne}>Move one space</Button>
+            <Button className="moveBtn" onClick={props.moveTwo}>Move two spaces</Button>
+            <Button className="moveBtn" onClick={props.moveThree}>Move three spaces</Button>
          </CardBody>
          </Card>
       </div>
