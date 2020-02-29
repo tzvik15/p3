@@ -18,6 +18,10 @@ io.on("connection", socket => {
     console.log("message: " + msg);
     io.emit("chat message", msg);
   });
+  socket.on("test state", function(state) {
+    io.emit("test state", state)
+  })
+
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 

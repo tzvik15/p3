@@ -57,6 +57,37 @@ function App() {
     userTech:[]
   })
 
+  //a set of dummy code and test functions to experiment with updating and passing state between users
+
+  //dummy state object to pass
+  const [testState, setTestState] = useState({
+    number:1,
+    bool: true,
+    msg: "this is a test"
+  });
+
+  //a function that consoles out the current state of the dummy object
+  const testFunPrint = ()=>{
+    console.log(testState)
+  }
+
+  //a function that updates the state of the dummy function
+  const testFunUpdate = ()=>{
+    setTestState({...testState, number: testState.number +1})
+  }
+
+  //a function that passes the dummy object to the socket server
+  const  testFunPass = () => {
+    socket.emit("test state", testState);
+  }
+
+  //an event listener that listens for receiving an updated dummy object from the server and triggers the setState function when that happens
+  useEffect(() => {
+    socket.on("test state", state => {
+      setTestState(state);
+    });
+  }, [testState]);
+
   //a hook listening to the number of players that updates the state of an existing player to true
   useEffect(() =>{
     if (totalPlayers === 1) {
@@ -105,7 +136,11 @@ function App() {
 
       <div className="content-container">
         <Board />
-
+        {/* dummy buttons to test passing state */}
+        <button onClick={testFunPrint}>console test</button>
+        <button onClick={testFunUpdate}>update state</button>
+        <button onClick={testFunPass}>bounce state</button>
+        
         <div className="cards-container col">
           <Chat handleChatSend={handleChatSend} textValue={textValue} />
           <TileCard />
