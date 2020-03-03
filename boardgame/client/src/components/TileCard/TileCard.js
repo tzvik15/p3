@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-   Card, CardImg, CardText, CardBody,
-   CardTitle, CardSubtitle, Button
+   Card, CardText, CardBody,
+   CardTitle, CardSubtitle, 
 } from 'reactstrap';
 
 const TileCard = (props) => {
@@ -13,8 +13,6 @@ const TileCard = (props) => {
             <CardTitle>HTML</CardTitle>
             <CardSubtitle>Do you want to learn HTML? This will cost X hours</CardSubtitle>
             <CardText>Learning HTML is very important! If you spend the time to learn it now it may save you some time in the future!</CardText>
-            <Button>Learn HTML</Button>
-            <Button>Do NOT learn HTML</Button>
          </CardBody>
          </Card>
       </div>

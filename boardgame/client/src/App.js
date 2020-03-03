@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import API from './utils/API';
 import Board from "./components/Board/Board";
 import TileCard from "./components/TileCard/TileCard";
 import Chat from "./components/Chat/Chat";
 import Choice from "./components/Choice/Choice";
 import Header from "./components/Header/Header";
-
 import socketIOClient from "socket.io-client";
+import CardContext from "./utils/CardContext";
+
 
 function App() {
   const [textValue, setTextValue] = useState("");
@@ -130,26 +132,41 @@ function App() {
     });
   }, [textValue]);
 
+
+  
+  const [cardState, setCardState] = useState({
+    title: "",
+    description: ""
+  })
+  
+  const loadCards = () => {
+    API.getCards().then(function (data) {
+      console.log(data)
+    })
+  }
+
   return (
     <>
       <Header />
 
       <div className="content-container">
+      <CardContext.Provider value={cardState}>
         <Board />
         {/* dummy buttons to test passing state */}
         <button onClick={testFunPrint}>console test</button>
         <button onClick={testFunUpdate}>update state</button>
         <button onClick={testFunPass}>bounce state</button>
-        
+        <button onClick= {loadCards}>testAPI</button>
         <div className="cards-container col">
-          <Chat handleChatSend={handleChatSend} textValue={textValue} />
-          <TileCard />
-          <Choice 
-          moveOne = {moveOne}
-          moveTwo = {moveTwo}
-          moveThree = {moveThree}
-          />
+        <Chat handleChatSend={handleChatSend} textValue={textValue} />
+        <TileCard />
+        <Choice 
+        moveOne = {moveOne}
+        moveTwo = {moveTwo}
+        moveThree = {moveThree}
+        />
         </div>
+      </CardContext.Provider>
       </div>
     </>
   );
