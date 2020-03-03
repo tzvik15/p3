@@ -15,6 +15,7 @@ function App() {
   //a couple of variables to track users
   const userNum = 1;
   let totalPlayers=0;
+  let gameOn=false;
 
   //starter state for each potential user
   const [user1Data, setUser1Data] = useState({
@@ -68,13 +69,17 @@ function App() {
 
   //a function that consoles out the current state of the dummy object
   const testFunPrint = ()=>{
-    console.log(testState)
+    console.log(user1Data)
   }
 
   //a function that updates the state of the dummy function
   const testFunUpdate = ()=>{
-    setTestState({...testState, number: testState.number +1})
+    setUser1Data({...user1Data, userPosition: user1Data.userPosition +1});
+    setUser2Data({...user2Data, userPosition: user2Data.userPosition +1});
+    setUser3Data({...user3Data, userPosition: user3Data.userPosition +1});
+    setUser4Data({...user4Data, userPosition: user4Data.userPosition +1})
   }
+
 
   //a function that passes the dummy object to the socket server
   const  testFunPass = () => {
@@ -85,6 +90,7 @@ function App() {
   useEffect(() => {
     socket.on("test state", state => {
       setTestState(state);
+
     });
   }, [testState]);
 
@@ -135,7 +141,12 @@ function App() {
       <Header />
 
       <div className="content-container">
-        <Board />
+        <Board 
+        p1pos={user1Data.userPosition}
+        p2pos={user2Data.userPosition}
+        p3pos={user3Data.userPosition}
+        p4pos={user4Data.userPosition}
+        />
         {/* dummy buttons to test passing state */}
         <button onClick={testFunPrint}>console test</button>
         <button onClick={testFunUpdate}>update state</button>
