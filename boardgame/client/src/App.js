@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import API from './utils/API';
 import Board from "./components/Board/Board";
 import TileCard from "./components/TileCard/TileCard";
 import Chat from "./components/Chat/Chat";
 import Choice from "./components/Choice/Choice";
 import Header from "./components/Header/Header";
-
 import socketIOClient from "socket.io-client";
+import CardContext from "./utils/CardContext";
+
 
 function App() {
   const [textValue, setTextValue] = useState("");
@@ -178,6 +180,19 @@ function App() {
     });
   }, [textValue]);
 
+
+
+  
+  const [cardState, setCardState] = useState({
+    title: "",
+    description: ""
+  })
+  
+  const loadCards = () => {
+    API.getCards().then(function (data) {
+      console.log(data)
+    })
+
   //a function handling the passage of turns between players, also triggers passing the user states and game state between users
   function nextTurn() {
     if (
@@ -241,6 +256,7 @@ function App() {
       default:
         break;
     }
+
   }
 
   return (
@@ -248,6 +264,15 @@ function App() {
       <Header />
 
       <div className="content-container">
+
+      <CardContext.Provider value={cardState}>
+        <Board />
+        {/* dummy buttons to test passing state */}
+        <button onClick={testFunPrint}>console test</button>
+       
+        <button onClick= {loadCards}>testAPI</button>
+       
+
         <Board
           p1pos={user1Data.userPosition}
           p2pos={user2Data.userPosition}
@@ -288,7 +313,9 @@ function App() {
                 : p4m3
             }
           />
+
         </div>
+      </CardContext.Provider>
       </div>
     </>
   );

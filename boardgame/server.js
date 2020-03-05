@@ -1,12 +1,26 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
+const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 4001;
-const index = require("./routes/index");
-
 const app = express();
-app.use(index);
+const apiRoute = require("./routes/apiRoute");
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/cards",
+  { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
+  console.log("Db connected!")
+);
+
+app.use('/api', apiRoute);
 
 const server = http.createServer(app);
 
