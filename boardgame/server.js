@@ -33,19 +33,28 @@ io.on("connection", socket => {
     io.emit("chat message", msg);
   });
   socket.on("p1state", function(state) {
+    console.log(state)
     io.emit("p1state", state)
   })
   socket.on("p2state", function(state) {
+    console.log(state)
     io.emit("p2state", state)
   })
   socket.on("p3state", function(state) {
+    console.log(state)
     io.emit("p3state", state)
   })
   socket.on("p4state", function(state) {
+    console.log(state)
     io.emit("p4state", state)
   })
   socket.on("game state", function(state) {
+    console.log(state)
     io.emit("game state", state)
+  })
+  socket.on("game start", function(state) {
+    console.log(state)
+    io.emit("game start", state)
   })
 
   socket.on("disconnect", () => console.log("Client disconnected"));
