@@ -6,6 +6,8 @@ import TileCard from "./components/TileCard/TileCard";
 import Chat from "./components/Chat/Chat";
 import Choice from "./components/Choice/Choice";
 import Header from "./components/Header/Header";
+import LandingPage from "./components/LandingPage/LandingPage";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 import socketIOClient from "socket.io-client";
 import CardContext from "./utils/CardContext";
 
@@ -28,7 +30,7 @@ function App() {
   const [user1Data, setUser1Data] = useState({
     userExists: false,
     userId: 1,
-    userActive: false,
+    userActive: true,
     userName: "",
     userPosition: 0,
     userTime: 1500,
@@ -105,7 +107,14 @@ function App() {
             : (state.userNum = 1)
       });
     });
-  }, [gameState]);
+  }, [gameState.userNum]);
+
+  useEffect(() => {
+    socket.on("game start", state => {
+      setGameState({...gameState, gameOn: true});
+      setUser1Data({...user1Data, userActive:true})
+    });
+  }, [gameState.gameOn]);
 
   //a hook listening to the number of players that updates the state of an existing player to true
   useEffect(() => {
@@ -192,47 +201,49 @@ function App() {
     API.getCards().then(function (data) {
       console.log(data)
     })
-
+  }
   //a function handling the passage of turns between players, also triggers passing the user states and game state between users
   function nextTurn() {
+    if (gameState.userNum < gameState.totalPlayers) {
+      setGameState({ ...gameState, userNum: gameState.userNum + 1 });
+    } else setGameState({...gameState, userNum: 1})
     if (
       gameState.userNum === 1 &&
-      gameState.userNum <= gameState.totalPlayers
+      gameState.userNum < gameState.totalPlayers
     ) {
       setUser1Data({ ...user1Data, userActive: false });
       setUser2Data({ ...user2Data, userActive: true });
-      setGameState({ ...gameState, userNum: gameState.userNum + 1 });
-      socket.emit("p1state", user1Data);
-      socket.emit("game state", gameState);
     } else if (
       gameState.userNum === 2 &&
-      gameState.userNum <= gameState.totalPlayers
+      gameState.userNum < gameState.totalPlayers
     ) {
       setUser2Data({ ...user2Data, userActive: false });
       setUser3Data({ ...user3Data, userActive: true });
-      setGameState({ ...gameState, userNum: gameState.userNum + 1 });
-      socket.emit("p2state", user2Data);
-      socket.emit("game state", gameState);
     } else if (
       gameState.userNum === 3 &&
-      gameState.userNum <= gameState.totalPlayers
+      gameState.userNum < gameState.totalPlayers
     ) {
       setUser3Data({ ...user3Data, userActive: false });
       setUser4Data({ ...user4Data, userActive: true });
-      setGameState({ ...gameState, userNum: gameState.userNum + 1 });
-      socket.emit("p3state", user3Data);
-      socket.emit("game state", gameState);
     } else {
       setUser1Data({ ...user1Data, userActive: true });
       setUser2Data({ ...user2Data, userActive: false });
       setUser3Data({ ...user3Data, userActive: false });
       setUser4Data({ ...user4Data, userActive: false });
-      setGameState({ ...gameState, userNum: 1 });
+
     }
-    socket.emit("p4state", user4Data);
-    socket.emit("game state", gameState);
+
   }
 
+  function pass() {
+    socket.emit("p1state", user1Data);
+    socket.emit("p2state", user2Data);
+    socket.emit("p3state", user3Data);
+    socket.emit("p4state", user4Data);
+    socket.emit("game state", gameState);
+
+
+  }
   //a function handling player learning choice
   function learn() {
     switch (gameState.userNum) {
@@ -259,20 +270,35 @@ function App() {
 
   }
 
+  // function startGame()  {
+  //   setGameState({...gameState, userNum:1});
+  //   setGameState({...gameState, gameOn:true});
+  //     socket.emit("game start", gameState);
+  // }
+
+
   return (
+
+    // gameState.gameOn === false   ? 
+    // <LandingPage 
+    // count = {gameState.totalPlayers} 
+    // start = {startGame}
+    // test = {testFunPrint}
+    // play = {gameState.gameOn}
+    
+    // /> :
+    // gameState.totalPlayers === 4 || (gameState.gameOn === true && gameState.userNum!== 0)?
+    // <ErrorPage 
+    // count = {gameState.totalPlayers} 
+    // play = {gameState.gameOn}
+    // test = {testFunPrint}
+    // /> :
     <>
       <Header />
 
       <div className="content-container">
 
       <CardContext.Provider value={cardState}>
-        <Board />
-        {/* dummy buttons to test passing state */}
-        <button onClick={testFunPrint}>console test</button>
-       
-        <button onClick= {loadCards}>testAPI</button>
-       
-
         <Board
           p1pos={user1Data.userPosition}
           p2pos={user2Data.userPosition}
@@ -280,7 +306,9 @@ function App() {
           p4pos={user4Data.userPosition}
         />
         {/* dummy button to test passing state */}
+        <button onClick= {loadCards}>testAPI</button>
         <button onClick={testFunPrint}>console test</button>
+        <button onClick={pass}>Pass turn</button>
         <div className="cards-container col">
           <Chat handleChatSend={handleChatSend} textValue={textValue} />
           <TileCard learn={learn} noLearn={nextTurn} />
