@@ -291,40 +291,40 @@ function App() {
         description: card[2].description, 
         cost: card[2].cost})
         break;
-        case 4:
+      case 4:
           setCurrentCard({ title: card[3].title, 
           description: card[3].description, 
           cost: card[3].cost})
           break;
-          case 5:
+      case 5:
+        setCurrentCard({ title: card[4].title, 
+        description: card[4].description, 
+        cost: card[4].cost})
+        break;
+      case 6:
+        setCurrentCard({ title: card[5].title, 
+        description: card[5].description, 
+        cost: card[5].cost})
+        break;
+      case 7:
         setCurrentCard({ title: card[6].title, 
         description: card[6].description, 
         cost: card[6].cost})
         break;
-        case 6:
+      case 8:
         setCurrentCard({ title: card[7].title, 
         description: card[7].description, 
         cost: card[7].cost})
         break;
-        case 7:
+      case 9:
         setCurrentCard({ title: card[8].title, 
         description: card[8].description, 
         cost: card[8].cost})
         break;
-        case 8:
+      case 10:
         setCurrentCard({ title: card[9].title, 
         description: card[9].description, 
         cost: card[9].cost})
-        break;
-        case 9:
-        setCurrentCard({ title: card[10].title, 
-        description: card[10].description, 
-        cost: card[10].cost})
-        break;
-        case 10:
-        setCurrentCard({ title: card[11].title, 
-        description: card[11].description, 
-        cost: card[11].cost})
         break;
 
       default:
