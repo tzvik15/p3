@@ -332,19 +332,9 @@ function App() {
     }
     console.log(currentCard)
   }
-  
-  //a function handling the passage of turns between players, also triggers passing the user states and game state between users
 
-    description: ""
-  });
-
-  const loadCards = () => {
-    API.getCards().then(function(data) {
-      console.log(data);
-    });
-  };
   //a function handling the passage of turns between players, allows for players to have finished the game
- master
+
   function nextTurn() {
     if (
       gameState.userNum < gameState.totalPlayers &&
