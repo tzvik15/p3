@@ -19,7 +19,7 @@ function App() {
   //a global game state to track global variables
   const [gameState, setGameState] = useState({
     userNum: 1,
-    totalPlayers: 3,
+    totalPlayers: 4,
     gameOn: false
   });
 
@@ -30,41 +30,45 @@ function App() {
   const [user1Data, setUser1Data] = useState({
     userExists: false,
     userId: 1,
-    userActive: true,
     userName: "",
     userPosition: 0,
     userTime: 1500,
-    userTech: []
+    userTech: [],
+    done: false,
+    score:0
   });
 
   const [user2Data, setUser2Data] = useState({
     userExists: false,
     userId: 2,
-    userActive: false,
     userName: "",
     userPosition: 0,
     userTime: 1500,
-    userTech: []
+    userTech: [],
+    done: false,
+    score:0
   });
 
   const [user3Data, setUser3Data] = useState({
     userExists: false,
     userId: 3,
-    userActive: false,
     userName: "",
     userPosition: 0,
     userTime: 1500,
-    userTech: []
+    userTech: [],
+    done: true,
+    score:0
   });
 
   const [user4Data, setUser4Data] = useState({
     userExists: false,
     userId: 4,
-    userActive: false,
     userName: "",
     userPosition: 0,
     userTime: 1500,
-    userTech: []
+    userTech: [],
+    done: false,
+    score:0
   });
 
   //a function that consoles out the current state of the 4 users, and the game state
@@ -202,47 +206,49 @@ function App() {
       console.log(data)
     })
   }
-  //a function handling the passage of turns between players, also triggers passing the user states and game state between users
+  //a function handling the passage of turns between players, allows for players to have finished the game
   function nextTurn() {
-    if (gameState.userNum < gameState.totalPlayers) {
-      setGameState({ ...gameState, userNum: gameState.userNum + 1 });
-    } else setGameState({...gameState, userNum: 1})
-    if (
-      gameState.userNum === 1 &&
-      gameState.userNum < gameState.totalPlayers
-    ) {
-      setUser1Data({ ...user1Data, userActive: false });
-      setUser2Data({ ...user2Data, userActive: true });
-    } else if (
-      gameState.userNum === 2 &&
-      gameState.userNum < gameState.totalPlayers
-    ) {
-      setUser2Data({ ...user2Data, userActive: false });
-      setUser3Data({ ...user3Data, userActive: true });
-    } else if (
-      gameState.userNum === 3 &&
-      gameState.userNum < gameState.totalPlayers
-    ) {
-      setUser3Data({ ...user3Data, userActive: false });
-      setUser4Data({ ...user4Data, userActive: true });
-    } else {
-      setUser1Data({ ...user1Data, userActive: true });
-      setUser2Data({ ...user2Data, userActive: false });
-      setUser3Data({ ...user3Data, userActive: false });
-      setUser4Data({ ...user4Data, userActive: false });
-
-    }
-
+  if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===1 && user2Data.done === false) {
+        setGameState({...gameState, userNum: 2})
+      } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===1 && user2Data.done === true && user3Data.done === false ) {
+        setGameState({...gameState, userNum: 3})
+      } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===1 && user2Data.done === true && user3Data.done === true && user4Data.done === false) {
+        setGameState({...gameState, userNum: 4})
+      } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===2 && user3Data.done === false) {
+        setGameState({...gameState, userNum: 3})
+      } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===2 && user3Data.done === true && user4Data.done === false ) {
+        setGameState({...gameState, userNum: 4})
+      } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===2 && user3Data.done === true && user4Data.done === true && user1Data.done === false) {
+        setGameState({...gameState, userNum: 1})
+      }
+     else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===3 && user4Data.done === false) {
+      setGameState({...gameState, userNum: 4})
+    } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===3 && user4Data.done === true && user1Data.done === false ) {
+      setGameState({...gameState, userNum: 1})
+    } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===3 && user4Data.done === true && user1Data.done === true && user2Data.done === false) {
+      setGameState({...gameState, userNum: 2})
+    } else if (gameState.userNum <= gameState.totalPlayers && gameState.userNum ===4 && user1Data.done === false) {
+      setGameState({...gameState, userNum: 1})
+    } else if (gameState.userNum <= gameState.totalPlayers && gameState.userNum ===4 && user1Data.done === true && user2Data.done === false ) {
+      setGameState({...gameState, userNum: 2})
+    } else if (gameState.userNum <= gameState.totalPlayers && gameState.userNum ===4 && user1Data.done === true && user2Data.done === true && user3Data.done === false) {
+      setGameState({...gameState, userNum: 3})
+    } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===1 && user2Data.done === true && user3Data.done === true && user4Data.done === true) {
+      setGameState({...gameState, userNum: 1})
+    } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===2 && user3Data.done === true && user4Data.done === true && user1Data.done === true) {
+      setGameState({...gameState, userNum: 2})
+    } else if (gameState.userNum < gameState.totalPlayers && gameState.userNum ===3 && user4Data.done === true && user1Data.done === true && user2Data.done === true) {
+      setGameState({...gameState, userNum: 3})
+    } else if (gameState.userNum <= gameState.totalPlayers && gameState.userNum ===4 && user1Data.done === true && user2Data.done === true && user3Data.done === true) {
+      setGameState({...gameState, userNum: 4})
+    } 
   }
-
   function pass() {
     socket.emit("p1state", user1Data);
     socket.emit("p2state", user2Data);
     socket.emit("p3state", user3Data);
     socket.emit("p4state", user4Data);
     socket.emit("game state", gameState);
-
-
   }
   //a function handling player learning choice
   function learn() {
@@ -270,29 +276,11 @@ function App() {
 
   }
 
-  // function startGame()  {
-  //   setGameState({...gameState, userNum:1});
-  //   setGameState({...gameState, gameOn:true});
-  //     socket.emit("game start", gameState);
-  // }
+
 
 
   return (
 
-    // gameState.gameOn === false   ? 
-    // <LandingPage 
-    // count = {gameState.totalPlayers} 
-    // start = {startGame}
-    // test = {testFunPrint}
-    // play = {gameState.gameOn}
-    
-    // /> :
-    // gameState.totalPlayers === 4 || (gameState.gameOn === true && gameState.userNum!== 0)?
-    // <ErrorPage 
-    // count = {gameState.totalPlayers} 
-    // play = {gameState.gameOn}
-    // test = {testFunPrint}
-    // /> :
     <>
       <Header />
 
