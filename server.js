@@ -13,10 +13,17 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
+//
+// (gameState.userNum ===1 && user2Data.done === false) {
+//     setGameState({...gameState, userNum: 2})
+//   } else if (gameState.userNum ===1 && user2Data.done === true && user3Data.done === false ) {
+//     setGameState({...gameState, userNum: 3})
+//   } else if (gameState.userNum ===1 && user2Data.done === true && user3Data.done === true && user4Data.done === false) {
+//     setGameState({...gameState, userNum: 4})
+//   }
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/cards",
+  process.env.MONGODB_URI || "mongodb://user:tzvik200@ds147900.mlab.com:47900/heroku_bh00mj12",
   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
   console.log("Db connected!")
 );
