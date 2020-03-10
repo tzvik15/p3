@@ -184,6 +184,7 @@ function App() {
   //functions handling updating of user location state based on their action choice, passed as props to the Choice componant
   const p1m1 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 1 });
+    loadCards();
   };
   const p1m2 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 2 });
@@ -232,8 +233,108 @@ function App() {
     });
   }, [textValue]);
 
+
+  // Card code
   const [cardState, setCardState] = useState({
+    cardData: []
+  })
+  
+  const [currentCard, setCurrentCard] = useState({
     title: "",
+    description: "",
+    cost: 0
+  })
+  
+  window.onload = function() {
+    API.getCards().then(function (d) {
+      setCardState({ cardData: d })
+
+    })
+  }
+  
+  const loadCards = () => {
+    console.log(cardState)
+    switch (gameState.userNum) {
+      case 1:
+        renderCard(user1Data.userPosition)
+        break;
+      case 2:
+        renderCard(user2Data.userPosition)
+        break;
+      case 3:
+        renderCard(user3Data.userPosition)
+        break;
+      case 4:
+        renderCard(user4Data.userPosition)
+        break;
+      default:
+        break;
+    }
+  }
+  
+  const renderCard = (userPosition) => {
+    let card = cardState.cardData.data
+    
+    switch (userPosition) {
+      case 1:
+        setCurrentCard({ title: card[0].title, 
+        description: card[0].description, 
+        cost: card[0].cost})
+        break;
+      case 2:
+        setCurrentCard({ title: card[1].title, 
+        description: card[1].description, 
+        cost: card[1].cost})
+        break;
+      case 3:
+        setCurrentCard({ title: card[2].title, 
+        description: card[2].description, 
+        cost: card[2].cost})
+        break;
+        case 4:
+          setCurrentCard({ title: card[3].title, 
+          description: card[3].description, 
+          cost: card[3].cost})
+          break;
+          case 5:
+        setCurrentCard({ title: card[6].title, 
+        description: card[6].description, 
+        cost: card[6].cost})
+        break;
+        case 6:
+        setCurrentCard({ title: card[7].title, 
+        description: card[7].description, 
+        cost: card[7].cost})
+        break;
+        case 7:
+        setCurrentCard({ title: card[8].title, 
+        description: card[8].description, 
+        cost: card[8].cost})
+        break;
+        case 8:
+        setCurrentCard({ title: card[9].title, 
+        description: card[9].description, 
+        cost: card[9].cost})
+        break;
+        case 9:
+        setCurrentCard({ title: card[10].title, 
+        description: card[10].description, 
+        cost: card[10].cost})
+        break;
+        case 10:
+        setCurrentCard({ title: card[11].title, 
+        description: card[11].description, 
+        cost: card[11].cost})
+        break;
+
+      default:
+        break;
+    }
+    console.log(currentCard)
+  }
+  
+  //a function handling the passage of turns between players, also triggers passing the user states and game state between users
+
     description: ""
   });
 
@@ -243,6 +344,7 @@ function App() {
     });
   };
   //a function handling the passage of turns between players, allows for players to have finished the game
+ master
   function nextTurn() {
     if (
       gameState.userNum < gameState.totalPlayers &&
@@ -400,6 +502,49 @@ function App() {
       <Header />
 
       <div className="content-container">
+
+      <CardContext.Provider value={currentCard}>
+        <Board
+          p1pos={user1Data.userPosition}
+          p2pos={user2Data.userPosition}
+          p3pos={user3Data.userPosition}
+          p4pos={user4Data.userPosition}
+        />
+        {/* dummy button to test passing state */}
+        <button onClick= {loadCards}>testAPI</button>
+        <button onClick={testFunPrint}>console test</button>
+        <button onClick={pass}>Pass turn</button>
+        <div className="cards-container col">
+          <Chat handleChatSend={handleChatSend} textValue={textValue} />
+          <TileCard learn={learn} noLearn={nextTurn} />
+          <Choice
+            moveOne={
+              gameState.userNum === 1
+                ? p1m1
+                : gameState.userNum === 2
+                ? p2m1
+                : gameState.userNum === 3
+                ? p3m1
+                : p4m1
+            }
+            moveTwo={
+              gameState.userNum === 1
+                ? p1m2
+                : gameState.userNum === 2
+                ? p2m2
+                : gameState.userNum === 3
+                ? p3m2
+                : p4m2
+            }
+            moveThree={
+              gameState.userNum === 1
+                ? p1m3
+                : gameState.userNum === 2
+                ? p2m3
+                : gameState.userNum === 3
+                ? p3m3
+                : p4m3
+            }
         <CardContext.Provider value={cardState}>
           <Board
             p1pos={user1Data.userPosition}
