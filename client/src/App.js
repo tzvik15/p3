@@ -306,9 +306,9 @@ function App() {
           p4pos={user4Data.userPosition}
         />
         {/* dummy button to test passing state */}
-        <button onClick= {loadCards}>testAPI</button>
-        <button onClick={testFunPrint}>console test</button>
-        <button onClick={pass}>Pass turn</button>
+        {/* <button onClick= {loadCards}>testAPI</button>
+        <button onClick={testFunPrint}>console test</button> */}
+        {/* <button onClick={pass}>Pass turn</button> */}
         <div className="cards-container col">
           <Chat handleChatSend={handleChatSend} textValue={textValue} />
           <TileCard learn={learn} noLearn={nextTurn} />

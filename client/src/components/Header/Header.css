@@ -1,0 +1,13 @@
+.header {
+	color: rgb(255, 251, 251);
+	font-size: 100px;
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: rgb(247, 217, 144);
+}
+/* 
+.title {
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: goldenrod;
+	color: whitesmoke;
+	font-size: 30px;
+} */
