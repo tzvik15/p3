@@ -12,6 +12,28 @@ import socketIOClient from "socket.io-client";
 import CardContext from "./utils/CardContext";
 
 function App() {
+  // const getParameterByName = (username, url) => {
+  //   if (!url) url = window.location.href;
+  //   username = username.replace(/[[\]]/g, "\\$&");
+  //   var regex = new RegExp("[?&]" + username + "(=([^&#]*)|&|#|$)"),
+  //     results = regex.exec(url),
+  //     res;
+  //   if (!results) return null;
+  //   if (!results[2]) return "";
+  //   try {
+  //     res = decodeURIComponent(results[2].replace(/\+/g, " "));
+  //   } catch (error) {
+  //     res = "";
+  //   }
+  //   console.log(res);
+  //   return res;
+  // }
+
+  // window.onload = function() {
+  //   getParameterByName();
+
+  // }
+
   const [textValue, setTextValue] = useState("");
   const socket = socketIOClient("http://127.0.0.1:4001");
 
@@ -101,6 +123,12 @@ function App() {
   }, [user4Data]);
 
   useEffect(() => {
+    socket.on("game state", state => {
+      nextTurn();
+    });
+  }, [gameState.userNum]);
+
+  useEffect(() => {
     setUser1Data(user1Data => {
       return {
         ...user1Data,
@@ -139,18 +167,6 @@ function App() {
       };
     });
   }, [user4Data.userPosition > 24]);
-
-  useEffect(() => {
-    socket.on("game state", state => {
-      setGameState({
-        ...gameState,
-        userNum:
-          state.userNum < state.totalPlayers
-            ? state.userNum + 1
-            : (state.userNum = 1)
-      });
-    });
-  }, [gameState.userNum]);
 
   useEffect(() => {
     socket.on("game start", state => {
@@ -223,7 +239,7 @@ function App() {
   //a function that updates the state of a chat message and sends it to the io server to be delivered to all connected users
   function handleChatSend(chatMsg) {
     setTextValue(chatMsg);
-    socket.emit("chat message", chatMsg);
+    socket.broadcast.emit("chat message", chatMsg);
   }
 
   //a hook listening to changes in the text value that triggers a rerender, and thus a display of the new message
@@ -233,253 +249,317 @@ function App() {
     });
   }, [textValue]);
 
-
   // Card code
   const [cardState, setCardState] = useState({
     cardData: []
-  })
-  
+  });
+
   const [currentCard, setCurrentCard] = useState({
     title: "",
     description: "",
     cost: 0
-  })
-  
-  window.onload = function() {
-    API.getCards().then(function (d) {
-      setCardState({ cardData: d })
+  });
 
-    })
+  window.onload = function() {
+    API.getCards().then(function(d) {
+      console.log(d);
+      setCardState({ cardData: [d] });
+    });
+  };
+
+  function testCards() {
+    console.log(cardState, currentCard);
   }
-  
+
   const loadCards = () => {
-    console.log(cardState)
+    console.log(cardState);
     switch (gameState.userNum) {
       case 1:
-        renderCard(user1Data.userPosition)
+        renderCard(user1Data.userPosition);
         break;
       case 2:
-        renderCard(user2Data.userPosition)
+        renderCard(user2Data.userPosition);
         break;
       case 3:
-        renderCard(user3Data.userPosition)
+        renderCard(user3Data.userPosition);
         break;
       case 4:
-        renderCard(user4Data.userPosition)
+        renderCard(user4Data.userPosition);
         break;
       default:
         break;
     }
-  }
-  
-  const renderCard = (userPosition) => {
-    let card = cardState.cardData.data
-    
+  };
+
+  const renderCard = userPosition => {
+    let card = cardState.cardData.data;
+
     switch (userPosition) {
       case 1:
-        setCurrentCard({ title: card[0].title, 
-        description: card[0].description, 
-        cost: card[0].cost})
+        setCurrentCard({
+          title: card[0].title,
+          description: card[0].description,
+          cost: card[0].cost
+        });
         break;
       case 2:
-        setCurrentCard({ title: card[1].title, 
-        description: card[1].description, 
-        cost: card[1].cost})
+        setCurrentCard({
+          title: card[1].title,
+          description: card[1].description,
+          cost: card[1].cost
+        });
         break;
       case 3:
-        setCurrentCard({ title: card[2].title, 
-        description: card[2].description, 
-        cost: card[2].cost})
+        setCurrentCard({
+          title: card[2].title,
+          description: card[2].description,
+          cost: card[2].cost
+        });
         break;
       case 4:
-          setCurrentCard({ title: card[3].title, 
-          description: card[3].description, 
-          cost: card[3].cost})
-          break;
+        setCurrentCard({
+          title: card[3].title,
+          description: card[3].description,
+          cost: card[3].cost
+        });
+        break;
       case 5:
-        setCurrentCard({ title: card[4].title, 
-        description: card[4].description, 
-        cost: card[4].cost})
+        setCurrentCard({
+          title: card[4].title,
+          description: card[4].description,
+          cost: card[4].cost
+        });
         break;
       case 6:
-        setCurrentCard({ title: card[5].title, 
-        description: card[5].description, 
-        cost: card[5].cost})
+        setCurrentCard({
+          title: card[5].title,
+          description: card[5].description,
+          cost: card[5].cost
+        });
         break;
       case 7:
-        setCurrentCard({ title: card[6].title, 
-        description: card[6].description, 
-        cost: card[6].cost})
+        setCurrentCard({
+          title: card[6].title,
+          description: card[6].description,
+          cost: card[6].cost
+        });
         break;
       case 8:
-        setCurrentCard({ title: card[7].title, 
-        description: card[7].description, 
-        cost: card[7].cost})
+        setCurrentCard({
+          title: card[7].title,
+          description: card[7].description,
+          cost: card[7].cost
+        });
         break;
       case 9:
-        setCurrentCard({ title: card[8].title, 
-        description: card[8].description, 
-        cost: card[8].cost})
+        setCurrentCard({
+          title: card[8].title,
+          description: card[8].description,
+          cost: card[8].cost
+        });
         break;
       case 10:
-        setCurrentCard({ title: card[9].title, 
-        description: card[9].description, 
-        cost: card[9].cost})
+        setCurrentCard({
+          title: card[9].title,
+          description: card[9].description,
+          cost: card[9].cost
+        });
         break;
 
       default:
         break;
     }
-    console.log(currentCard)
-  }
+    console.log(currentCard);
+  };
 
   //a function handling the passage of turns between players, allows for players to have finished the game
 
   function nextTurn() {
-    if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 1 &&
-      user2Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 2 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 1 &&
-      user2Data.done === true &&
-      user3Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 3 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 1 &&
-      user2Data.done === true &&
-      user3Data.done === true &&
-      user4Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 4 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 2 &&
-      user3Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 3 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 2 &&
-      user3Data.done === true &&
-      user4Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 4 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 2 &&
-      user3Data.done === true &&
-      user4Data.done === true &&
-      user1Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 1 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 3 &&
-      user4Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 4 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 3 &&
-      user4Data.done === true &&
-      user1Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 1 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 3 &&
-      user4Data.done === true &&
-      user1Data.done === true &&
-      user2Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 2 });
-    } else if (
-      gameState.userNum <= gameState.totalPlayers &&
-      gameState.userNum === 4 &&
-      user1Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 1 });
-    } else if (
-      gameState.userNum <= gameState.totalPlayers &&
-      gameState.userNum === 4 &&
-      user1Data.done === true &&
-      user2Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 2 });
-    } else if (
-      gameState.userNum <= gameState.totalPlayers &&
-      gameState.userNum === 4 &&
-      user1Data.done === true &&
-      user2Data.done === true &&
-      user3Data.done === false
-    ) {
-      setGameState({ ...gameState, userNum: 3 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 1 &&
-      user2Data.done === true &&
-      user3Data.done === true &&
-      user4Data.done === true
-    ) {
-      setGameState({ ...gameState, userNum: 1 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 2 &&
-      user3Data.done === true &&
-      user4Data.done === true &&
-      user1Data.done === true
-    ) {
-      setGameState({ ...gameState, userNum: 2 });
-    } else if (
-      gameState.userNum < gameState.totalPlayers &&
-      gameState.userNum === 3 &&
-      user4Data.done === true &&
-      user1Data.done === true &&
-      user2Data.done === true
-    ) {
-      setGameState({ ...gameState, userNum: 3 });
-    } else if (
-      gameState.userNum <= gameState.totalPlayers &&
-      gameState.userNum === 4 &&
-      user1Data.done === true &&
-      user2Data.done === true &&
-      user3Data.done === true
-    ) {
-      setGameState({ ...gameState, userNum: 4 });
-    }
-  }
+      if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 1 &&
+        user2Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 2 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 1 &&
+        user2Data.done === true &&
+        user3Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 3 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 1 &&
+        user2Data.done === true &&
+        user3Data.done === true &&
+        user4Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 4 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 2 &&
+        user3Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 3 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 2 &&
+        user3Data.done === true &&
+        user4Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 4 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 2 &&
+        user3Data.done === true &&
+        user4Data.done === true &&
+        user1Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 1 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 3 &&
+        user4Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 4 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 3 &&
+        user4Data.done === true &&
+        user1Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 1 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 3 &&
+        user4Data.done === true &&
+        user1Data.done === true &&
+        user2Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 2 });
+      } else if (
+        gameState.userNum <= gameState.totalPlayers &&
+        gameState.userNum === 4 &&
+        user1Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 1 });
+      } else if (
+        gameState.userNum <= gameState.totalPlayers &&
+        gameState.userNum === 4 &&
+        user1Data.done === true &&
+        user2Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 2 });
+      } else if (
+        gameState.userNum <= gameState.totalPlayers &&
+        gameState.userNum === 4 &&
+        user1Data.done === true &&
+        user2Data.done === true &&
+        user3Data.done === false
+      ) {
+        setGameState({ ...gameState, userNum: 3 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 1 &&
+        user2Data.done === true &&
+        user3Data.done === true &&
+        user4Data.done === true
+      ) {
+        setGameState({ ...gameState, userNum: 1 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 2 &&
+        user3Data.done === true &&
+        user4Data.done === true &&
+        user1Data.done === true
+      ) {
+        setGameState({ ...gameState, userNum: 2 });
+      } else if (
+        gameState.userNum < gameState.totalPlayers &&
+        gameState.userNum === 3 &&
+        user4Data.done === true &&
+        user1Data.done === true &&
+        user2Data.done === true
+      ) {
+        setGameState({ ...gameState, userNum: 3 });
+      } else if (
+        gameState.userNum <= gameState.totalPlayers &&
+        gameState.userNum === 4 &&
+        user1Data.done === true &&
+        user2Data.done === true &&
+        user3Data.done === true
+      ) {
+        setGameState({ ...gameState, userNum: 4 });
+      }
+    } 
+  
 
   function pass() {
-    socket.emit("p1state", user1Data);
-    socket.emit("p2state", user2Data);
-    socket.emit("p3state", user3Data);
-    socket.emit("p4state", user4Data);
     socket.emit("game state", gameState);
   }
   //a function handling player learning choice
   function learn() {
     switch (gameState.userNum) {
       case 1:
-        setUser1Data({ ...user1Data, userTech: [...user1Data.userTech, tech] });
-        nextTurn();
+        try {
+          setUser1Data({
+            ...user1Data,
+            userTech: [...user1Data.userTech, currentCard.title]
+          });
+        } finally {
+          socket.emit("p1state", user1Data);
+          pass();
+        }
         break;
       case 2:
-        setUser2Data({ ...user2Data, userTech: [...user2Data.userTech, tech] });
-        nextTurn();
+        try {
+          setUser2Data({
+            ...user2Data,
+            userTech: [...user2Data.userTech, tech]
+          });
+        } finally {
+          socket.emit("p2state", user2Data);
+          pass();
+        }
         break;
       case 3:
         setUser3Data({ ...user3Data, userTech: [...user3Data.userTech, tech] });
-        nextTurn();
+        socket.emit("p3state", user3Data);
+        pass();
         break;
       case 4:
         setUser4Data({ ...user4Data, userTech: [...user4Data.userTech, tech] });
-        nextTurn();
+        socket.emit("p4state", user4Data);
+        pass();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  function NoLearn() {
+    switch (gameState.userNum) {
+      case 1:
+        socket.emit("p1state", user1Data);
+        pass();
+
+        break;
+      case 2:
+        socket.emit("p2state", user2Data);
+        pass();
+
+        break;
+      case 3:
+        socket.emit("p3state", user3Data);
+        pass();
+
+        break;
+      case 4:
+        socket.emit("p4state", user4Data);
+        pass();
+
         break;
 
       default:
@@ -492,6 +572,7 @@ function App() {
       <Header />
 
       <div className="content-container">
+<<<<<<< HEAD
 
       <CardContext.Provider value={currentCard}>
         <Board
@@ -535,6 +616,8 @@ function App() {
                 ? p3m3
                 : p4m3
             }
+=======
+>>>>>>> 300dffb6fb74dddc4096fc0288bcdad027374e6e
         <CardContext.Provider value={cardState}>
           <Board
             p1pos={user1Data.userPosition}
@@ -545,10 +628,11 @@ function App() {
           {/* dummy button to test passing state */}
           {/* <button onClick={loadCards}>testAPI</button> */}
           <button onClick={testFunPrint}>console test</button>
-          {/* <button onClick={pass}>Pass turn</button> */}
+          <button onClick={testCards}>cards</button>
+          {/* <button onClick={cards}>load cards</button> */}
           <div className="cards-container col">
             <Chat handleChatSend={handleChatSend} textValue={textValue} />
-            <TileCard learn={learn} noLearn={nextTurn} />
+            <TileCard learn={learn} noLearn={NoLearn} />
             <Choice
               moveOne={
                 gameState.userNum === 1
@@ -577,7 +661,6 @@ function App() {
                   ? p3m3
                   : p4m3
               }
-              pass={pass}
             />
           </div>
         </CardContext.Provider>

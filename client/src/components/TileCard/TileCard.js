@@ -33,7 +33,7 @@ import {
 } from "reactstrap";
 import CardContext from "../../utils/CardContext"
 
-const TileCard = () => {
+const TileCard = (props) => {
 
   const { title, description, cost } = useContext(CardContext);
 
@@ -49,8 +49,8 @@ const TileCard = () => {
           <CardText>
             {description}
           </CardText>
-          <Button >Learn </Button>
-          <Button >Do NOT learn {title}</Button>
+          <Button onClick={props.learn}>Learn </Button>
+          <Button onClick={props.noLearn}>Do NOT learn {title}</Button>
         </CardBody>
       </Card>
     </div>
