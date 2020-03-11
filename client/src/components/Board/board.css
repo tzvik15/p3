@@ -15,7 +15,7 @@
 	background-color: red;
 	border-radius: 50%;
 	display: inline-block;
-	box-shadow: 0 0 5px 5px rgb(240, 182, 182);
+	box-shadow: 0 0 5px 5px silver;
 }
 
 .pawn2 {
@@ -49,7 +49,7 @@
 	box-shadow: 0 0 5px 5px silver;
 }
 .boardContainer {
-	background-image: url(../Board/IMG_0156.JPG);
+	background-image: url(../Board/IMG_0378.jpg);
 	background-size: fit;
 	background-attachment: fixed;
 	color: whitesmoke;
