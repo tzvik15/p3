@@ -15,7 +15,6 @@ const Choice = (props) => {
             <Button className="moveBtn" onClick={props.moveOne}>Move one space</Button>
             <Button className="moveBtn" onClick={props.moveTwo}>Move two spaces</Button>
             <Button className="moveBtn" onClick={props.moveThree}>Move three spaces</Button>
-            <Button className="moveBtn" onClick={props.pass}>Pass Turn</Button>
          </CardBody>
          </Card>
       </div>

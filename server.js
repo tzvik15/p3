@@ -40,6 +40,10 @@ io.on("connection", socket => {
     console.log("message: " + msg);
     io.emit("chat message", msg);
   });
+  socket.on("game state", function(state) {
+    console.log(state)
+    io.emit("game state", state)
+  })
   socket.on("p1state", function(state) {
     console.log(state)
     io.emit("p1state", state)
@@ -55,10 +59,6 @@ io.on("connection", socket => {
   socket.on("p4state", function(state) {
     console.log(state)
     io.emit("p4state", state)
-  })
-  socket.on("game state", function(state) {
-    console.log(state)
-    io.emit("game state", state)
   })
   socket.on("game start", function(state) {
     console.log(state)
