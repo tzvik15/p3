@@ -245,13 +245,24 @@ function App() {
     cost: 0
   })
   
-  window.onload = function() {
+  // window.onload = function() {
+  //   API.getCards().then(function (d) {
+  //     setCardState({ cardData: d })
+
+  //   })
+  // }
+  function cards() {
+  
     API.getCards().then(function (d) {
       setCardState({ cardData: d })
 
     })
-  }
   
+}
+function testCards() {
+  console.log(cardState, currentCard)
+}
+
   const loadCards = () => {
     console.log(cardState)
     switch (gameState.userNum) {
@@ -466,7 +477,7 @@ function App() {
   function learn() {
     switch (gameState.userNum) {
       case 1:
-        setUser1Data({ ...user1Data, userTech: [...user1Data.userTech, tech] });
+        setUser1Data({ ...user1Data, userTech: [...user1Data.userTech, currentCard.title] });
         nextTurn();
         break;
       case 2:
@@ -493,48 +504,7 @@ function App() {
 
       <div className="content-container">
 
-      <CardContext.Provider value={currentCard}>
-        <Board
-          p1pos={user1Data.userPosition}
-          p2pos={user2Data.userPosition}
-          p3pos={user3Data.userPosition}
-          p4pos={user4Data.userPosition}
-        />
-        {/* dummy button to test passing state */}
-        <button onClick= {loadCards}>testAPI</button>
-        <button onClick={testFunPrint}>console test</button>
-        <button onClick={pass}>Pass turn</button>
-        <div className="cards-container col">
-          <Chat handleChatSend={handleChatSend} textValue={textValue} />
-          <TileCard learn={learn} noLearn={nextTurn} />
-          <Choice
-            moveOne={
-              gameState.userNum === 1
-                ? p1m1
-                : gameState.userNum === 2
-                ? p2m1
-                : gameState.userNum === 3
-                ? p3m1
-                : p4m1
-            }
-            moveTwo={
-              gameState.userNum === 1
-                ? p1m2
-                : gameState.userNum === 2
-                ? p2m2
-                : gameState.userNum === 3
-                ? p3m2
-                : p4m2
-            }
-            moveThree={
-              gameState.userNum === 1
-                ? p1m3
-                : gameState.userNum === 2
-                ? p2m3
-                : gameState.userNum === 3
-                ? p3m3
-                : p4m3
-            }
+     
         <CardContext.Provider value={cardState}>
           <Board
             p1pos={user1Data.userPosition}
@@ -545,6 +515,8 @@ function App() {
           {/* dummy button to test passing state */}
           {/* <button onClick={loadCards}>testAPI</button> */}
           <button onClick={testFunPrint}>console test</button>
+          <button onClick={testCards}>cards</button>
+          <button onClick={cards}>load cards</button>
           {/* <button onClick={pass}>Pass turn</button> */}
           <div className="cards-container col">
             <Chat handleChatSend={handleChatSend} textValue={textValue} />
