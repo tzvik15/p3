@@ -184,7 +184,7 @@ function App() {
   //functions handling updating of user location state based on their action choice, passed as props to the Choice componant
   const p1m1 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 1 });
-    loadCards();
+    // loadCards();
   };
   const p1m2 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 2 });
@@ -347,6 +347,7 @@ function testCards() {
   //a function handling the passage of turns between players, allows for players to have finished the game
 
   function nextTurn() {
+    alert("nextTurn is firing")
     if (
       gameState.userNum < gameState.totalPlayers &&
       gameState.userNum === 1 &&
@@ -475,9 +476,10 @@ function testCards() {
   }
   //a function handling player learning choice
   function learn() {
+    alert("learn is firing")
     switch (gameState.userNum) {
       case 1:
-        setUser1Data({ ...user1Data, userTech: [...user1Data.userTech, currentCard.title] });
+        setUser1Data({ ...user1Data, userTech: [...user1Data.userTech, tech] });
         nextTurn();
         break;
       case 2:
