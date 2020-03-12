@@ -6,12 +6,13 @@ import TileCard from "./components/TileCard/TileCard";
 import Chat from "./components/Chat/Chat";
 import Choice from "./components/Choice/Choice";
 import Header from "./components/Header/Header";
-import LandingPage from "./components/LandingPage/LandingPage";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
 import socketIOClient from "socket.io-client";
 import CardContext from "./utils/CardContext";
+import Footer from "./components/footer/Footer"
 
 function App() {
+
+  window.pNum=0;
   // const getParameterByName = (username, url) => {
   //   if (!url) url = window.location.href;
   //   username = username.replace(/[[\]]/g, "\\$&");
@@ -235,6 +236,12 @@ function App() {
   const p4m3 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 3 });
   };
+
+const newGame = () => {
+   window.pNum = prompt("How many players are there?")
+}
+
+
 
   //a function that updates the state of a chat message and sends it to the io server to be delivered to all connected users
   function handleChatSend(chatMsg) {
@@ -616,6 +623,7 @@ function App() {
                   : p4m3
               }
             />
+            <Footer game={newGame} />
           </div>
         </CardContext.Provider>
       </div>
