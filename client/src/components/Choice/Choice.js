@@ -1,4 +1,5 @@
 import React from 'react';
+import "./choice.css";
 import {
    Card, CardText, CardBody,
    Button

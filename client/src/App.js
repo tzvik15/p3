@@ -239,7 +239,7 @@ function App() {
   //a function that updates the state of a chat message and sends it to the io server to be delivered to all connected users
   function handleChatSend(chatMsg) {
     setTextValue(chatMsg);
-    socket.broadcast.emit("chat message", chatMsg);
+    socket.emit("chat message", chatMsg);
   }
 
   //a hook listening to changes in the text value that triggers a rerender, and thus a display of the new message
@@ -581,8 +581,8 @@ function App() {
           />
           {/* dummy button to test passing state */}
           {/* <button onClick={loadCards}>testAPI</button> */}
-          <button onClick={testFunPrint}>console test</button>
-          <button onClick={testCards}>cards</button>
+          {/* <button onClick={testFunPrint}>console test</button> */}
+          {/* <button onClick={testCards}>cards</button> */}
           {/* <button onClick={cards}>load cards</button> */}
           <div className="cards-container col">
             <Chat handleChatSend={handleChatSend} textValue={textValue} />

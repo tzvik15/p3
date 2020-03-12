@@ -1,0 +1,6 @@
+.header {
+	color: rgb(223, 0, 111);
+	font-size: 100px;
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: rgb(247, 217, 144);
+}
