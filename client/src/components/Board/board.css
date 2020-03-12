@@ -1,46 +1,56 @@
 .row {
-   width: 500px;
-   margin: 0%;
+	width: 500px;
+	margin: 0%;
 }
-
 .col {
-   height: 100px;
-   margin: 0%;
+	height: 100px;
+	margin: 0%;
 }
-.pawn1{
-   position: absolute;
-   transition: left 0.5s, top 0.5s;
-   height: 15px;
-   width: 15px;
-   background-color: red;
-   border-radius: 50%;
-   display: inline-block;
+.pawn1 {
+	position: absolute;
+	transition: left 0.5s, top 0.5s;
+	height: 15px;
+	width: 15px;
+	background-color: red;
+	border-radius: 50%;
+	display: inline-block;
+	box-shadow: 0 0 5px 5px silver;
 }
-
 .pawn2 {
-   position: absolute;
-   transition: left 0.5s, top 0.5s;
-   height: 15px;
-  width: 15px;
-  background-color: blue;
-  border-radius: 50%;
-  display: inline-block;
+	position: absolute;
+	transition: left 0.5s, top 0.5s;
+	height: 15px;
+	width: 15px;
+	background-color: rgb(59, 166, 228);
+	border-radius: 50%;
+	display: inline-block;
+	box-shadow: 0 0 5px 5px silver;
 }
 .pawn3 {
-   position: absolute;
-   transition: left 0.5s, top 0.5s;
-   height: 15px;
-  width: 15px;
-  background-color: green;
-  border-radius: 50%;
-  display: inline-block;
+	position: absolute;
+	transition: left 0.5s, top 0.5s;
+	height: 15px;
+	width: 15px;
+	background-color: rgb(73, 226, 73);
+	border-radius: 50%;
+	display: inline-block;
+	box-shadow: 0 0 5px 5px silver;
 }
 .pawn4 {
-   position: absolute;
-   transition: left 0.5s, top 0.5s;
-   height: 15px;
-  width: 15px;
-  background-color: black;
-  border-radius: 50%;
-  display: inline-block;
+	position: absolute;
+	transition: left 0.5s, top 0.5s;
+	height: 15px;
+	width: 15px;
+	background-color: rgb(247, 247, 68);
+	border-radius: 50%;
+	display: inline-block;
+	box-shadow: 0 0 5px 5px silver;
+}
+.boardContainer {
+   background-image: url(../Board/background.jpg);
+   
+   background-size: 500px 500px;
+   background-position: center;
+  background-repeat: no-repeat;
+	color: whitesmoke;
 }
