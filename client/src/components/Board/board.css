@@ -1,9 +1,9 @@
 .row {
-	width: 780px;
+	width: 500px;
 	margin: 0%;
 }
 .col {
-	height: 120px;
+	height: 100px;
 	margin: 0%;
 }
 .pawn1 {
@@ -48,7 +48,9 @@
 }
 .boardContainer {
    background-image: url(../Board/background.jpg);
-   background-size: cover;
+   
+   background-size: 500px 500px;
+   background-position: center;
   background-repeat: no-repeat;
 	color: whitesmoke;
 }
