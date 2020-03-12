@@ -45,7 +45,7 @@ function App() {
     gameOn: false
   });
 
-  let tech = "testTech";
+  let tech = "fDFAWF";
   //need to grab tech name here by doing an API call to the db (find1) on user location
 
   //starter state for each potential user
@@ -53,7 +53,7 @@ function App() {
     userExists: false,
     userId: 1,
     userName: "",
-    userPosition: 0,
+    userPosition: 1,
     userTime: 1500,
     userTech: [],
     done: false,
@@ -64,7 +64,7 @@ function App() {
     userExists: false,
     userId: 2,
     userName: "",
-    userPosition: 0,
+    userPosition: 1,
     userTime: 1500,
     userTech: [],
     done: false,
@@ -75,7 +75,7 @@ function App() {
     userExists: false,
     userId: 3,
     userName: "",
-    userPosition: 0,
+    userPosition: 1,
     userTime: 1500,
     userTech: [],
     done: true,
@@ -86,7 +86,7 @@ function App() {
     userExists: false,
     userId: 4,
     userName: "",
-    userPosition: 0,
+    userPosition: 1,
     userTime: 1500,
     userTech: [],
     done: false,
@@ -95,33 +95,42 @@ function App() {
 
   //a function that consoles out the current state of the 4 users, and the game state
   const testFunPrint = () => {
-    console.log(user1Data, user2Data, user3Data, user4Data, gameState);
+    console.log(user1Data, currentCard, currentCard.title)
+      // user2Data, user3Data, user4Data, gameState);
   };
 
   //listeners to state being passed between seperate game users that updates the local user/game state to match what was transmitted
+  // useEffect(() => {
+  //   socket.on("p1state", state => {
+  //     console.log("1")
+  //     setUser1Data({...user1Data, state});
+  //   });
+  //   return console.log("clean")
+  // }, [user1Data]);
   useEffect(() => {
     socket.on("p1state", state => {
-      setUser1Data(state);
+      setUser1Data(userData => ({...userData, state}));
     });
-  }, [user1Data]);
+}, []);
 
-  useEffect(() => {
-    socket.on("p2state", state => {
-      setUser2Data(state);
-    });
-  }, [user2Data]);
 
-  useEffect(() => {
-    socket.on("p3state", state => {
-      setUser3Data(state);
-    });
-  }, [user3Data]);
+useEffect(() => {
+  socket.on("p2state", state => {
+    setUser2Data(userData => ({...userData, state}));
+  });
+}, []);
 
-  useEffect(() => {
-    socket.on("p4state", state => {
-      setUser4Data(state);
-    });
-  }, [user4Data]);
+useEffect(() => {
+  socket.on("p3state", state => {
+    setUser3Data(userData => ({...userData, state}));
+  });
+}, []);
+
+useEffect(() => {
+  socket.on("p4state", state => {
+    setUser4Data(userData => ({...userData, state}));
+  });
+}, []);
 
   useEffect(() => {
     socket.on("game state", state => {
@@ -169,12 +178,6 @@ function App() {
     });
   }, [user4Data.userPosition > 24]);
 
-  useEffect(() => {
-    socket.on("game start", state => {
-      setGameState({ ...gameState, gameOn: true });
-      setUser1Data({ ...user1Data, userActive: true });
-    });
-  }, [gameState.gameOn]);
 
   //a hook listening to the number of players that updates the state of an existing player to true
   useEffect(() => {
@@ -272,6 +275,7 @@ const newGame = () => {
 
   //a hook listening to changes in the text value that triggers a rerender, and thus a display of the new message
   useEffect(() => {
+    console.log("11")
     socket.on("chat message", msg => {
       setTextValue(msg);
     });
@@ -323,7 +327,7 @@ const newGame = () => {
           title: card[0].title,
           description: card[0].description,
           cost: card[0].cost
-        });
+        });       
         break;
       case 2:
         setCurrentCard({
@@ -626,13 +630,15 @@ const newGame = () => {
     switch (gameState.userNum) {
       case 1:
         try {
+          console.log(currentCard, typeof(currentCard.title), tech)
           setUser1Data({
             ...user1Data,
-            userTech: [...user1Data.userTech, currentCard.title]
+             userTech: [...user1Data.userTech, currentCard.title]
           });
         } finally {
-          socket.emit("p1state", user1Data);
-          pass();
+          console.log(user1Data)
+            socket.emit("p1state", user1Data);
+           pass();
         }
         break;
       case 2:
@@ -642,6 +648,7 @@ const newGame = () => {
             userTech: [...user2Data.userTech, tech]
           });
         } finally {
+          console.log(user2Data)
           socket.emit("p2state", user2Data);
           pass();
         }
@@ -653,8 +660,9 @@ const newGame = () => {
         break;
       case 4:
         setUser4Data({ ...user4Data, userTech: [...user4Data.userTech, tech] });
-        socket.emit("p4state", user4Data);
-        pass();
+        console.log(user4Data)
+         socket.emit("p4state", user4Data);
+         pass();
         break;
 
       default:
@@ -704,7 +712,7 @@ const newGame = () => {
           />
           {/* dummy button to test passing state */}
           {/* <button onClick={loadCards}>testAPI</button> */}
-
+            <button onClick={testFunPrint}>print</button>
           {/* <button onClick={testCards}>cards</button> */}
           {/* <button onClick={cards}>load cards</button> */}
           <div className="cards-container col">
