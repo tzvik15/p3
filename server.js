@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "production") {
 //   }
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://user:tzvik200@ds147900.mlab.com:47900/heroku_bh00mj12",
+  process.env.MONGODB_URI || "mongodb://localhost/cards",
   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
   console.log("Db connected!")
 );
