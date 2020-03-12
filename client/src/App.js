@@ -204,36 +204,57 @@ function App() {
   };
   const p1m2 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 2 });
+    loadCards();
+
   };
   const p1m3 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 3 });
+    loadCards();
+
   };
   const p2m1 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 1 });
+    loadCards();
+
   };
   const p2m2 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 2 });
+    loadCards();
+
   };
   const p2m3 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 3 });
+    loadCards();
+
   };
   const p3m1 = () => {
     setUser3Data({ ...user3Data, userPosition: user3Data.userPosition + 1 });
+    loadCards();
+
   };
   const p3m2 = () => {
     setUser3Data({ ...user3Data, userPosition: user3Data.userPosition + 2 });
+    loadCards();
+
   };
   const p3m3 = () => {
     setUser3Data({ ...user3Data, userPosition: user3Data.userPosition + 3 });
+    loadCards();
+
   };
   const p4m1 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 1 });
+    loadCards();
+
   };
   const p4m2 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 2 });
+    loadCards();
+
   };
   const p4m3 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 3 });
+    loadCards();
   };
 
   //a function that updates the state of a chat message and sends it to the io server to be delivered to all connected users
@@ -263,13 +284,9 @@ function App() {
   window.onload = function() {
     API.getCards().then(function(d) {
       console.log(d);
-      setCardState({ cardData: [d] });
+      setCardState({ cardData: d });
     });
   };
-
-  function testCards() {
-    console.log(cardState, currentCard);
-  }
 
   const loadCards = () => {
     console.log(cardState);
@@ -291,9 +308,8 @@ function App() {
     }
   };
 
-  const renderCard = userPosition => {
+  const renderCard = (userPosition) => {
     let card = cardState.cardData.data;
-
     switch (userPosition) {
       case 1:
         setCurrentCard({
@@ -365,6 +381,106 @@ function App() {
           cost: card[9].cost
         });
         break;
+        case 11:
+        setCurrentCard({
+          title: card[10].title,
+          description: card[10].description,
+          cost: card[10].cost
+        });
+        break;
+        case 12:
+        setCurrentCard({
+          title: card[11].title,
+          description: card[11].description,
+          cost: card[11].cost
+        });
+        break;
+        case 13:
+        setCurrentCard({
+          title: card[12].title,
+          description: card[12].description,
+          cost: card[12].cost
+        });
+        break;
+        case 14:
+        setCurrentCard({
+          title: card[13].title,
+          description: card[13].description,
+          cost: card[13].cost
+        });
+        break;
+        case 15:
+        setCurrentCard({
+          title: card[14].title,
+          description: card[14].description,
+          cost: card[14].cost
+        });
+        break;
+        case 16:
+        setCurrentCard({
+          title: card[15].title,
+          description: card[15].description,
+          cost: card[15].cost
+        });
+        break;
+        case 17:
+        setCurrentCard({
+          title: card[16].title,
+          description: card[16].description,
+          cost: card[16].cost
+        });
+        break;
+        case 18:
+        setCurrentCard({
+          title: card[17].title,
+          description: card[17].description,
+          cost: card[17].cost
+        });
+        break;
+        case 19:
+        setCurrentCard({
+          title: card[18].title,
+          description: card[18].description,
+          cost: card[18].cost
+        });
+        break;
+        case 20:
+        setCurrentCard({
+          title: card[19].title,
+          description: card[19].description,
+          cost: card[19].cost
+        });
+        break;
+        case 21:
+        setCurrentCard({
+          title: card[20].title,
+          description: card[20].description,
+          cost: card[20].cost
+        });
+        break;
+        case 22:
+        setCurrentCard({
+          title: card[21].title,
+          description: card[21].description,
+          cost: card[21].cost
+        });
+        break;
+        case 23:
+        setCurrentCard({
+          title: card[22].title,
+          description: card[22].description,
+          cost: card[22].cost
+        });
+        break;
+        case 24:
+        setCurrentCard({
+          title: card[23].title,
+          description: card[23].description,
+          cost: card[23].cost
+        });
+        break;
+        
+        
 
       default:
         break;
@@ -572,7 +688,7 @@ function App() {
       <Header />
 
       <div className="content-container">
-        <CardContext.Provider value={cardState}>
+        <CardContext.Provider value={currentCard}>
           <Board
             p1pos={user1Data.userPosition}
             p2pos={user2Data.userPosition}
@@ -581,7 +697,7 @@ function App() {
           />
           {/* dummy button to test passing state */}
           {/* <button onClick={loadCards}>testAPI</button> */}
-          {/* <button onClick={testFunPrint}>console test</button> */}
+
           {/* <button onClick={testCards}>cards</button> */}
           {/* <button onClick={cards}>load cards</button> */}
           <div className="cards-container col">

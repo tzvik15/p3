@@ -448,91 +448,91 @@ function Board(props) {
       <div className="boardContainer">
         <div className="row">
           <div className="col tile" id="1">
-            1
+            Start!
           </div>
           <div className="col tile" id="2">
-            2
+            HTML
           </div>
           <div className="col tile" id="3">
-            3
+            CSS
           </div>
           <div className="col tile" id="4">
-            4
+            Javascript
           </div>
           <div className="col tile" id="5">
-            5
+            Web API's
           </div>
         </div>
 
         <div className="row">
           <div className="col tile" id="6">
-            16
+            AngularJS
           </div>
           <div className="col tile" id="7">
-            17
+            Python
           </div>
           <div className="col tile" id="8">
-            18
+            C#
           </div>
           <div className="col tile" id="9">
-            19
+            C++
           </div>
           <div className="col tile" id="10">
-            6
+            Git/Version Control
           </div>
         </div>
 
         <div className="row">
           <div className="col tile" id="11">
-            15
+            MERN
           </div>
           <div className="col tile" id="12">
-            24
+            FINAL PROJECT!
           </div>
           <div className="col tile" id="13">
             DONE
           </div>
           <div className="col tile" id="14">
-            20
+            Java
           </div>
           <div className="col tile" id="15">
-            7
+            Project One!
           </div>
         </div>
 
         <div className="row">
           <div className="col tile" id="16">
-            14
+            React
           </div>
           <div className="col tile" id="17">
-            23
+            PHP
           </div>
           <div className="col tile" id="18">
-            22
+            Swift
           </div>
           <div className="col tile" id="19">
-            21
+            Ruby
           </div>
           <div className="col tile" id="20">
-            8
+            ES6
           </div>
         </div>
 
         <div className="row">
           <div className="col tile" id="21">
-            13
+            MongoDB
           </div>
           <div className="col tile" id="22">
-            12
+            ORM's
           </div>
           <div className="col tile" id="23">
-            11
+            MySQL
           </div>
           <div className="col tile" id="24">
-            10
+            Express
           </div>
           <div className="col tile" id="25">
-            9
+            NodeJs
           </div>
         </div>
       </div>
