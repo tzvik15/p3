@@ -95,13 +95,20 @@ function App() {
   };
 
   const testFunPass = () => {
+    pass();
+    // if (gameState.userNum === 1) {
+    // } else if (gameState.userNum===2) {
+      
+    // } else if (gameState.userNum===3) {
+      
+    // } else if (gameState.userNum ===4) {
+      
+    // }
     socket.emit("p1state", user1Data);
-
-    socket.emit("p2state", user2Data);
-
-    socket.emit("p3state", user3Data);
-
-    socket.emit("p4state", user4Data);
+  socket.emit("p2state", user2Data);
+  socket.emit("p3state", user3Data);
+  socket.emit("p4state", user4Data);
+    // pass()
   };
 
   //listeners to state being passed between seperate game users that updates the local user/game state to match what was transmitted
@@ -130,11 +137,13 @@ function App() {
 
   const testSet1 = state => {
     setUser1Data(state);
+    // pass()
   };
 
   useEffect(() => {
     socket.on("p2state", state => {
       testSet2(state);
+      // pass()
     });
   }, []);
 
@@ -165,10 +174,15 @@ function App() {
   useEffect(() => {
     console.log("5");
     socket.on("game state", state => {
-      console.log("game state" + state);
-      nextTurn();
+      testSetGame(state)
     });
-  }, [gameState.userNum]);
+  }, []);
+  
+  const testSetGame = state => {
+    console.log("here")
+    setGameState(state)
+    //nextTurn();
+  }
 
   useEffect(() => {
     console.log("6");
@@ -237,61 +251,72 @@ function App() {
     }
   }, [gameState.totalPlayers]);
 
+  const carder = () => {
+    loadCards()
+  }
+
   //functions handling updating of user location state based on their action choice, passed as props to the Choice componant
   const p1m1 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 1 });
-    loadCards();
+    // loadCards();
   };
+
+  // useEffect(() => {
+   
+  //     loadCards()
+
+  // }, [user1Data.userPosition]);
+
   const p1m2 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 2 });
-    loadCards();
 
-    console.log(user1Data.userPosition)
-
-
+    // loadCards();
   };
   const p1m3 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 3 });
-    loadCards();
+    // loadCards();
 
-    console.log(user1Data.userPosition)
+  
+
+
+  };
 
   };
   const p2m1 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 1 });
-    loadCards();
+    // loadCards();
   };
   const p2m2 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 2 });
-    loadCards();
+    // loadCards();
   };
   const p2m3 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 3 });
-    loadCards();
+    // loadCards();
   };
   const p3m1 = () => {
     setUser3Data({ ...user3Data, userPosition: user3Data.userPosition + 1 });
-    loadCards();
+    // loadCards();
   };
   const p3m2 = () => {
     setUser3Data({ ...user3Data, userPosition: user3Data.userPosition + 2 });
-    loadCards();
+    // loadCards();
   };
   const p3m3 = () => {
     setUser3Data({ ...user3Data, userPosition: user3Data.userPosition + 3 });
-    loadCards();
+    // loadCards();
   };
   const p4m1 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 1 });
-    loadCards();
+    // loadCards();
   };
   const p4m2 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 2 });
-    loadCards();
+    // loadCards();
   };
   const p4m3 = () => {
     setUser4Data({ ...user4Data, userPosition: user4Data.userPosition + 3 });
-    loadCards();
+    // loadCards();
   };
 
   const newGame = () => {
@@ -385,7 +410,7 @@ function App() {
 
   const renderCard = userPosition => {
     let card = cardState.cardData.data;
-    switch (userPosition) {
+    switch (userPosition-1) {
       case 1:
         setCurrentCard({
           title: card[0].title,
@@ -565,20 +590,20 @@ function App() {
 
   function nextTurn() {
     if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 1 &&
       user2Data.done === false
     ) {
       setGameState({ ...gameState, userNum: 2 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 1 &&
       user2Data.done === true &&
       user3Data.done === false
     ) {
       setGameState({ ...gameState, userNum: 3 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 1 &&
       user2Data.done === true &&
       user3Data.done === true &&
@@ -586,20 +611,20 @@ function App() {
     ) {
       setGameState({ ...gameState, userNum: 4 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 2 &&
       user3Data.done === false
     ) {
       setGameState({ ...gameState, userNum: 3 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 2 &&
       user3Data.done === true &&
       user4Data.done === false
     ) {
       setGameState({ ...gameState, userNum: 4 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 2 &&
       user3Data.done === true &&
       user4Data.done === true &&
@@ -607,20 +632,20 @@ function App() {
     ) {
       setGameState({ ...gameState, userNum: 1 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 3 &&
       user4Data.done === false
     ) {
       setGameState({ ...gameState, userNum: 4 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 3 &&
       user4Data.done === true &&
       user1Data.done === false
     ) {
       setGameState({ ...gameState, userNum: 1 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 3 &&
       user4Data.done === true &&
       user1Data.done === true &&
@@ -649,7 +674,7 @@ function App() {
     ) {
       setGameState({ ...gameState, userNum: 3 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 1 &&
       user2Data.done === true &&
       user3Data.done === true &&
@@ -657,7 +682,7 @@ function App() {
     ) {
       setGameState({ ...gameState, userNum: 1 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <=gameState.totalPlayers &&
       gameState.userNum === 2 &&
       user3Data.done === true &&
       user4Data.done === true &&
@@ -665,7 +690,7 @@ function App() {
     ) {
       setGameState({ ...gameState, userNum: 2 });
     } else if (
-      gameState.userNum < gameState.totalPlayers &&
+      gameState.userNum <= gameState.totalPlayers &&
       gameState.userNum === 3 &&
       user4Data.done === true &&
       user1Data.done === true &&
@@ -681,12 +706,11 @@ function App() {
     ) {
       setGameState({ ...gameState, userNum: 4 });
     }
+    else alert("here")
   }
 
   function pass() {
     socket.emit("game state", gameState);
-    //
-    console.log(user1Data);
   }
   //a function handling player learning choice
   function learn() {
@@ -696,28 +720,32 @@ function App() {
           ...user1Data,
           userTech: [...user1Data.userTech, currentCard.title]
         });
-        pass();
+        nextTurn()
+        // pass();
         break;
       case 2:
         setUser2Data({
           ...user2Data,
           userTech: [...user2Data.userTech, currentCard.title]
         });
-        pass();
+        // pass();
+        nextTurn()
         break;
       case 3:
         setUser2Data({
           ...user3Data,
           userTech: [...user3Data.userTech, currentCard.title]
         });
-        pass();
+        // pass();
+        nextTurn()
         break;
       case 4:
         setUser4Data({
           ...user4Data,
           userTech: [...user4Data.userTech, currentCard.title]
         });
-        pass();
+        nextTurn()
+        // pass();
         break;
 
       default:
@@ -729,22 +757,22 @@ function App() {
     switch (gameState.userNum) {
       case 1:
         // socket.emit("p1state", user1Data);
-        pass();
+        nextTurn()
 
         break;
       case 2:
         // socket.emit("p2state", user2Data);
-        pass();
+        nextTurn()
 
         break;
       case 3:
         // socket.emit("p3state", user3Data);
-        pass();
+        nextTurn()
 
         break;
       case 4:
         // socket.emit("p4state", user4Data);
-        pass();
+        nextTurn()
 
         break;
 
@@ -768,11 +796,11 @@ function App() {
           {/* dummy button to test passing state */}
           {/* <button onClick={loadCards}>testAPI</button> */}
           {/* <button onClick={testFunPrint}>print</button> */}
-          {/* <button onClick={testCards}>cards</button> */}
-          {/* <button onClick={testFunPass}>pass 1</button> */}
+          {/* <button onClick={carder}>cards</button> */}
+          {/* <button onClick={nextTurn}>pass </button> */}
           <div className="cards-container col">
             <Chat handleChatSend={handleChatSend} textValue={textValue} />
-            <TileCard learn={learn} noLearn={NoLearn} pass={testFunPass} />
+            <TileCard learn={learn} noLearn={NoLearn} pass={testFunPass} card={carder}/>
             <Choice
               moveOne={
                 gameState.userNum === 1
