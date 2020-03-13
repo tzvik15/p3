@@ -20,9 +20,9 @@ const TileCard = (props) => {
         {/* <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" /> */}
         <CardBody>
           <CardTitle>{title}</CardTitle>
-          <CardSubtitle>
+          {/* <CardSubtitle>
             Do you want to learn {title}? This will cost {cost} hours
-          </CardSubtitle>
+          </CardSubtitle> */}
           <CardText>
             {description}
           </CardText>
