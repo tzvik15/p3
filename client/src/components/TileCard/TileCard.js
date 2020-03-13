@@ -28,6 +28,7 @@ const TileCard = (props) => {
           </CardText>
           <Button onClick={props.learn}>Learn </Button>
           <Button onClick={props.noLearn}>Do NOT learn {title}</Button>
+          <Button onClick={props.pass}>PLAYED</Button>
         </CardBody>
       </Card>
     </div>
