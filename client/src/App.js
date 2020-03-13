@@ -269,11 +269,18 @@ function App() {
 
   const p1m2 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 2 });
+
     // loadCards();
   };
   const p1m3 = () => {
     setUser1Data({ ...user1Data, userPosition: user1Data.userPosition + 3 });
     // loadCards();
+
+  
+
+
+  };
+
   };
   const p2m1 = () => {
     setUser2Data({ ...user2Data, userPosition: user2Data.userPosition + 1 });
