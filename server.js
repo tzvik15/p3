@@ -22,8 +22,14 @@ if (process.env.NODE_ENV === "production") {
 //     setGameState({...gameState, userNum: 4})
 //   }
 
+// mongoose.connect(
+//   process.env.MONGODB_URI || "mongodb://localhost/cards",
+//   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
+//   console.log("Db connected!")
+// );
+
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/cards",
+  process.env.MONGODB_URI || "mongodb://user:tzvik200@ds147900.mlab.com:47900/heroku_bh00mj12",
   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
   console.log("Db connected!")
 );
