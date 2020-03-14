@@ -35,7 +35,7 @@ function App() {
   // }
 
   const [textValue, setTextValue] = useState("");
-  const socket = socketIOClient("http://127.0.0.1:4001");
+  const socket = socketIOClient("https://radiant-retreat-86258.herokuapp.com/");
 
   //a global game state to track global variables
   const [gameState, setGameState] = useState({
