@@ -39,11 +39,13 @@ app.use('/api', apiRoute);
 const server = http.createServer(app);
 //const server = express();
 
-const io = socketIo(server);
+//const io = socketIo(server);
+
+const io = require('socket.io').listen(server)
 
 io.origins(["https://radiant-retreat-86258.herokuapp.com/"]);
 
-io.on("connection", socket => {
+io.sockets.on("connection", socket => {
   console.log("New client connected");
   socket.on("chat message", function(msg) {
     console.log("message: " + msg);
