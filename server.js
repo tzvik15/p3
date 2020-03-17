@@ -1,5 +1,5 @@
 const express = require("express");
-const https = require("https");
+const http = require("http");
 const socketIo = require("socket.io");
 const mongoose = require('mongoose');
 
@@ -36,10 +36,10 @@ mongoose.connect(
 
 app.use('/api', apiRoute);
 
-//const server = https.createServer(app);
+const server = http.createServer(app);
 //const server = express();
 
-const io = socketIo(app);
+const io = socketIo(server);
 
 io.origins(["https://radiant-retreat-86258.herokuapp.com/"]);
 
