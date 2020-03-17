@@ -36,7 +36,8 @@ mongoose.connect(
 
 app.use('/api', apiRoute);
 
-const server = https.createServer(app);
+//const server = https.createServer(app);
+const server = express();
 
 const io = socketIo(server);
 
