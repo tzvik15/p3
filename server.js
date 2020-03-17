@@ -1,5 +1,5 @@
 const express = require("express");
-const http = require("http");
+const https = require("https");
 const socketIo = require("socket.io");
 const mongoose = require('mongoose');
 
@@ -36,7 +36,7 @@ mongoose.connect(
 
 app.use('/api', apiRoute);
 
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 const io = socketIo(server);
 
