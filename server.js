@@ -37,9 +37,9 @@ mongoose.connect(
 app.use('/api', apiRoute);
 
 //const server = https.createServer(app);
-const server = express();
+//const server = express();
 
-const io = socketIo(server);
+const io = socketIo(app);
 
 io.origins(["https://radiant-retreat-86258.herokuapp.com/"]);
 
