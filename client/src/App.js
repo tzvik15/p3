@@ -11,6 +11,7 @@ import CardContext from "./utils/CardContext";
 import Footer from "./components/footer/Footer";
 
 import io from "socket.io-client";
+let socket;
 
 function App() {
   window.pNum = 0;
@@ -38,7 +39,9 @@ function App() {
 
   const [textValue, setTextValue] = useState("");
   //const socket = socketIOClient("https://radiant-retreat-86258.herokuapp.com/");
-  const socket = io();
+  
+  const ENDPOINT = "https://radiant-retreat-86258.herokuapp.com/";
+  socket = io(ENDPOINT);
 
   //a global game state to track global variables
   const [gameState, setGameState] = useState({
