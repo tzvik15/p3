@@ -1,5 +1,6 @@
 
 # Coding Bootcamp Boardgame!
+![](bootcamp.jpg)
 
 ## Description
 This application is a simple, "Game of Life" style boardgame where up to 4 users (who can be connected locally in a "hot-seat" style gameplay, or remotely in seperate computers) move around the board, make decisions on which technologies to learn, an at the end a result is calculated for each user. The app also includes a chat console for connected users to communicate with each other (across all terminals).
@@ -19,4 +20,5 @@ Auth0, React.js, Socket.io, Bootstrap/Reactstrap, MongoDB with Mongoose and mLab
 
 ## Deployed links
 Auth0 gateway page: https://waterylime.github.io/Login/
+
 Direct game URL: https://radiant-retreat-86258.herokuapp.com/
