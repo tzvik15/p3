@@ -38,10 +38,10 @@ function App() {
   // }
 
   const [textValue, setTextValue] = useState("");
-  //const socket = socketIOClient("https://radiant-retreat-86258.herokuapp.com/");
+  const socket = socketIOClient("https://radiant-retreat-86258.herokuapp.com/");
   
-  const ENDPOINT = "https://radiant-retreat-86258.herokuapp.com/";
-  socket = io(ENDPOINT);
+  //const ENDPOINT = "https://radiant-retreat-86258.herokuapp.com/";
+  //socket = io(ENDPOINT);
 
   //a global game state to track global variables
   const [gameState, setGameState] = useState({
