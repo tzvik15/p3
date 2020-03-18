@@ -3,12 +3,15 @@ const http = require("http");
 const socketIo = require("socket.io");
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 const PORT = process.env.PORT || 4001;
 const app = express();
 const apiRoute = require("./routes/apiRoute");
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
