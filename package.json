@@ -13,7 +13,8 @@
     "express": "^4.17.1",
     "if-env": "^1.0.4",
     "mongoose": "^5.9.3",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "cors": "^2.8.5",
   },
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev && npm run seed",
