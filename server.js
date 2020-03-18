@@ -46,7 +46,7 @@ const io = socketIo(server);
 
 //const io = require('socket.io').listen(server)
 
-io.origins(["https://radiant-retreat-86258.herokuapp.com/"]);
+//io.origins(["https://radiant-retreat-86258.herokuapp.com/"]);
 
 io.on("connection", socket => {
   console.log("New client connected");
