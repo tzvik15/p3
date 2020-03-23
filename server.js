@@ -31,17 +31,17 @@ if (process.env.NODE_ENV === "production") {
 //   console.log("Db connected!")
 // );
 
-// mongoose.connect(
-//   process.env.MONGODB_URI || "mongodb://user:tzvik200@ds147900.mlab.com:47900/heroku_bh00mj12",
-//   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
-//   console.log("Db connected!")
-// );
-
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/cards",
+  process.env.MONGODB_URI || "mongodb://tzvik15:tzvik200@ds157475.mlab.com:57475/heroku_4hd62m6m",
   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
   console.log("Db connected!")
 );
+
+// mongoose.connect(
+//   process.env.MONGODB_URI || "mongodb://localhost/cards",
+//   { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
+//   console.log("Db connected!")
+// );
 
 app.use('/api', apiRoute);
 
